@@ -1,0 +1,14 @@
+{
+  "name": "electron-js",
+  "version": "1.0.0",
+  "description": "electron.js",
+  "main": "index.js",
+  "scripts": {
+    "electron": "electron ."
+  },
+  "author": "adrani riadh",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^13.1.7"
+  }
+}
