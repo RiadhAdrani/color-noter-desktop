@@ -1,25 +1,33 @@
-import logo from "./logo.svg";
 import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import SideBar from "./components/SideBar/SideBar";
+import { useState } from "react";
+import Loading from "./components/Loading/Loading";
+import Home from "./components/Home/Home";
+import Database from "./models/Database";
 
-function App() {
+const App = (props) => {
+     const [database, setDatabase] = useState(new Database({}));
+
      return (
-          <div className="App">
-               <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <p>
-                         Edit <code>src/App.js</code> and save to reload. Hello World
-                    </p>
-                    <a
-                         className="App-link"
-                         href="https://reactjs.org"
-                         target="_blank"
-                         rel="noopener noreferrer"
-                    >
-                         Learn React
-                    </a>
-               </header>
-          </div>
+          <Router>
+               <SideBar show={database.id} />
+               <Switch style={{ flex: 1 }}>
+                    <Route exact path="/">
+                         <Loading setDatabase={setDatabase} />
+                    </Route>
+                    <Route exact path="/home">
+                         <Home database={database} />
+                    </Route>
+                    <Route exact path="/settings">
+                         <h1>Yes</h1>
+                    </Route>
+                    <Route exact path="/about">
+                         <h1>About</h1>
+                    </Route>
+               </Switch>
+          </Router>
      );
-}
+};
 
 export default App;

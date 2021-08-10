@@ -1,0 +1,12 @@
+#home-container {
+     display: flex;
+     flex-direction: column;
+     flex: 1;
+     color: whitesmoke;
+}
+
+#home-title {
+     padding: 20px;
+     margin: 0;
+     font-size: 1.5em;
+}

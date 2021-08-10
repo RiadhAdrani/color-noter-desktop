@@ -1,0 +1,37 @@
+.side-bar {
+     color: whitesmoke;
+     display: flex;
+     z-index: 1000;
+     min-width: 300px;
+     left: 0px;
+     flex-direction: column;
+     height: 100%;
+     background-color: #1d1f24;
+     padding-left: 5px;
+     box-shadow: 1px 1px 5px black;
+     margin-right: 10px;
+}
+
+.logo {
+     color: aliceblue;
+     font-size: 2em;
+     text-align: center;
+}
+.router-links {
+     display: flex;
+     flex-direction: column;
+}
+.router-link {
+     font-size: 1.3em;
+     background-color: #272930;
+     text-decoration: none;
+     color: white;
+     border-left: 5px white solid;
+     margin-bottom: 10px;
+     margin-right: 5px;
+     padding: 10px;
+}
+
+.side-bar-bottom {
+     margin-top: auto;
+}
