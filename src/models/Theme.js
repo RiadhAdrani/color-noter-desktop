@@ -20,7 +20,6 @@ const Theme = [
      createColorTheme("#ADF1FF", "#5CE4FF", "#0099B8", "#005566", "#003D52"), // Cyan
      createColorTheme("#F8C9CB", "#EA5D64", "#C71A22", "#7E1016", "#360709"), // Red Bordeaux
      createColorTheme("#ECDCF9", "#C696ED", "#8D2EDC", "#621B9D", "#421269"), // Purple
-     createColorTheme("#8EE1D9", "#4ED0C3", "#2A9D8F", "#1E7167", "#11403B"), // Persian Green
 ];
 
 export default Theme;
