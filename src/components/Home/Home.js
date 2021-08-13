@@ -5,6 +5,7 @@ import search from "../../assets/search.svg";
 import sort from "../../assets/sort.svg";
 import trash from "../../assets/trash.svg";
 import select from "../../assets/check-square.svg";
+import plus from "../../assets/plus.svg";
 import NoteCard from "./sub-components/NoteCard/NoteCard";
 
 const Home = (props) => {
@@ -13,25 +14,54 @@ const Home = (props) => {
 
      return (
           <div id="home-container">
-               <p
-                    id="home-title"
+               <div
+                    id="sticky-top"
                     style={{
                          backgroundImage: `linear-gradient(to right, ${theme.dark}, ${theme.darker})`,
                     }}
                >
-                    Welcome back {database.username}!
-               </p>
-               <div id="tool-bar">
-                    <Tool icon={search} name={"Search"} onClick={() => {}} />
-                    <Tool icon={select} name={"Select"} onClick={() => {}} />
-                    <Tool icon={sort} name={"Sort"} onClick={() => {}} />
-                    <Tool icon={trash} name={"Delete"} onClick={() => {}} />
+                    <p id="home-title">Welcome back {database.id} !</p>
+                    <div id="tool-bar">
+                         <Tool icon={search} name={"Search"} onClick={() => {}} />
+                         <Tool icon={select} name={"Select"} onClick={() => {}} />
+                         <Tool icon={sort} name={"Sort"} onClick={() => {}} />
+                         <Tool icon={trash} name={"Delete"} onClick={() => {}} />
+                    </div>
                </div>
+
                <div id="notes-list">
                     {database.notes.map((e) => {
-                         console.log(e, "");
-                         return <NoteCard note={e} key={e.uid} />;
+                         return (
+                              <NoteCard
+                                   note={e}
+                                   key={e.uid}
+                                   onClick={() => {
+                                        props.trigger(e);
+                                   }}
+                              />
+                         );
                     })}
+               </div>
+               <div
+                    style={{
+                         position: "absolute",
+                         bottom: "40px",
+                         right: "100px",
+                         padding: "22px",
+                         backgroundColor: theme.dark,
+                         borderRadius: "50%",
+                         cursor: "pointer",
+                    }}
+               >
+                    <img
+                         src={plus}
+                         alt="Add"
+                         height={"20px"}
+                         id="floating-button"
+                         style={{
+                              filter: "invert(100)",
+                         }}
+                    />
                </div>
           </div>
      );

@@ -7,6 +7,14 @@
      cursor: pointer;
 }
 
+#icon-box:hover {
+     background-color: rgba(100, 100, 100, 0.75);
+}
+
+#icon-box:active {
+     background-color: rgba(50, 50, 50, 0.75);
+}
+
 #icon {
      height: 25px;
      width: 25px;

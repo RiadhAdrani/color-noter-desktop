@@ -62,9 +62,84 @@ class Database {
           return true;
      }
 
-     async retrieveUserData(onSynced = () => {}) {
-          return Promise.all([this.getData(), this.getNotes()]).then((values) => {
-               console.log(values);
+     async retrieveUserData(onSynced = () => {}, onFailed = () => {}) {
+          return Promise.all([this.getData(), this.getNotes()]).then(() => {
+               onSynced();
+          });
+     }
+
+     static async upload(dataObject) {
+          let userUUID = null;
+          (await db.collection("users").get()).docs.forEach((user) => {
+               if (user.data().id === dataObject.id) {
+                    userUUID = user.id;
+               }
+          });
+          if (userUUID) {
+               await db.collection("users").doc(userUUID).update({
+                    email: dataObject.email,
+                    id: dataObject.id,
+                    last_sync: dataObject.lastSync,
+                    password: dataObject.password,
+                    user_color: dataObject.color,
+                    user_theme: dataObject.theme,
+               });
+
+               const user_notes = await db
+                    .collection("users")
+                    .doc(userUUID)
+                    .collection("user_notes");
+
+               const notesUUID = (await user_notes.get()).docs.map((e) => e.id);
+               notesUUID.forEach((noteUID) => {
+                    user_notes.doc(noteUID).delete();
+               });
+
+               const newNotes = dataObject.notes.map((note) => {
+                    return {
+                         color: note.color,
+                         content: note.content,
+                         creationDate: note.creationDate,
+                         modificationDate: note.modificationDate,
+                         title: note.title,
+                         uid: note.uid,
+                    };
+               });
+
+               newNotes.forEach((note) => {
+                    user_notes.doc(note.uid).set(note);
+               });
+          } else return true;
+     }
+
+     static async updateCloudDatabaseInfo(newData) {
+          const users = await db.collection("users").get();
+          users.docs.forEach((user) => {
+               if (user.data().id === newData.id) {
+                    const info = {
+                         email: newData.email,
+                         id: newData.id,
+                         last_sync: newData.lastSync,
+                         password: newData.password,
+                         user_color: newData.color,
+                         user_theme: newData.theme,
+                    };
+                    console.log(info);
+                    return true;
+               }
+          });
+     }
+
+     static async updateCloudDatabaseNotes(newNotes) {
+          console.log(newNotes);
+          return true;
+     }
+
+     static async updateCloud(db, onSynced = () => {}) {
+          return Promise.all([
+               Database.updateCloudDatabaseInfo(db),
+               Database.updateCloudDatabaseNotes(db.notes),
+          ]).then(() => {
                onSynced();
           });
      }

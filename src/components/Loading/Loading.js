@@ -3,14 +3,28 @@ import { useHistory } from "react-router-dom";
 import Database from "../../models/Database";
 import "./Loading.css";
 
+const electron = window.require("electron");
+const { ipcRenderer } = electron;
+
 const Loading = (props) => {
      let history = useHistory();
 
      useEffect(() => {
           const db = new Database({});
+
           db.retrieveUserData(() => {
-               props.setDatabase(db);
-               history.push("/home");
+               ipcRenderer.send("db:get");
+               ipcRenderer.on("db:send", (event, data) => {
+                    if (data.lastSync >= db.lastSync) {
+                         Database.upload(data);
+                         props.setDatabase(data);
+                    } else {
+                         ipcRenderer.send("db:update", db);
+                         props.setDatabase(db);
+                    }
+
+                    history.push("/home");
+               });
           });
      });
 
