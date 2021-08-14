@@ -7,14 +7,25 @@ class Note {
           creationDate = undefined,
           modificationDate = undefined,
           title = "Note",
-          uid = uuid(),
+          uid = `C${uuid()}-${new Date().getTime()}}`,
      }) {
           this.color = color;
-          this.content = content;
           this.creationDate = creationDate ? creationDate : new Date().getTime();
           this.modificationDate = modificationDate ? modificationDate : new Date().getTime();
           this.title = title;
           this.uid = uid;
+          this.content = content ? content : this.uid.split("")[0] === "C" ? [] : "";
+     }
+
+     toJSON() {
+          return {
+               color: this.color,
+               content: this.content,
+               creationDate: this.creationDate,
+               modificationDate: this.modificationDate,
+               title: this.title,
+               uid: this.uid,
+          };
      }
 }
 

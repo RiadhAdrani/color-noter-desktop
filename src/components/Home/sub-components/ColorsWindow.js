@@ -73,6 +73,7 @@ const ColorsWindow = (props) => {
                                         props.changeColor(Theme.indexOf(e));
                                         props.close(false);
                                    }}
+                                   key={e.normal}
                               ></div>
                          ))}
                     </div>

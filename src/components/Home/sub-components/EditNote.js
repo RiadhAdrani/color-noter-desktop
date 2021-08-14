@@ -2,14 +2,15 @@ import { useState } from "react";
 import Theme from "../../../models/Theme";
 import ColorsWindow from "./ColorsWindow";
 import paint from "../../../assets/paint-brush.svg";
+import Todo from "./Todo";
+import ToDo from "../../../models/ToDo";
+import Note from "../../../models/Note";
 
 const EditNote = (props) => {
      const [color, setColor] = useState(props.edit ? props.edit.color : 0);
      const [title, setTitle] = useState(props.edit ? props.edit.title : "");
      const [content, setContent] = useState(props.edit ? props.edit.content : "");
      const [openPopup, setOpen] = useState(false);
-
-     console.log(props.edit.content);
 
      const theme = Theme[color];
 
@@ -19,21 +20,26 @@ const EditNote = (props) => {
           height:100%;
           display: flex;
           flex-direction: column;
+          justify-content:center;
           width:100%;          
-          background-color:#282c34c9;
+          background-color:#282c34ee;
           z-index: 10000;
      }
      #container{
           display:flex;
           flex-direction: column;
           margin:7%;
-          border: 5px solid white;
+          min-width:70%;
+          align-self:center;
+          max-height:80%;
+          background-color: #282c34;
+          border: 10px solid white;
           border-radius: 20px;
           padding: 30px;
           flex:1;
      }
      #title-box{
-          padding:5px;
+          padding:10px;
           font-size:1.5em;
           background-color:${theme.dark};
           color:white;
@@ -132,16 +138,63 @@ const EditNote = (props) => {
                               />
                          </div>
                     </div>
+                    {props.edit.uid.split("")[0] === "T" ? (
+                         <textarea
+                              id="content-box"
+                              type="text"
+                              placeholder="what's in your mind today?"
+                              value={content}
+                              onChange={(e) => setContent(e.target.value)}
+                         />
+                    ) : (
+                         <div id="content-box" style={{ overflowY: "scroll" }}>
+                              {content.map((t) => (
+                                   <Todo
+                                        color={color}
+                                        todo={t}
+                                        index={content.indexOf(t)}
+                                        content={content}
+                                        setContent={(c) => {
+                                             setContent(c);
+                                        }}
+                                        key={t.uid}
+                                   />
+                              ))}
+                         </div>
+                    )}
 
-                    <textarea
-                         id="content-box"
-                         type="text"
-                         placeholder="what's in your mind today?"
-                         value={content}
-                         onChange={(e) => setContent(e.target.value)}
-                    />
                     <div id="buttons-container">
-                         <button className="edit-buttons">Save</button>
+                         {props.edit.uid.slice("")[0] === "C" ? (
+                              <button
+                                   className="edit-buttons"
+                                   style={{ marginRight: "auto" }}
+                                   onClick={() => {
+                                        const x = ToDo({});
+                                        setContent([...content, x]);
+                                   }}
+                              >
+                                   Add
+                              </button>
+                         ) : (
+                              ""
+                         )}
+
+                         <button
+                              className="edit-buttons"
+                              onClick={() => {
+                                   const noteToSave = new Note({
+                                        color: `${color}`,
+                                        content: content,
+                                        modificationDate: new Date().getTime(),
+                                        creationDate: props.edit.creationDate,
+                                        title: title,
+                                        uid: props.edit.uid,
+                                   });
+                                   props.save(noteToSave);
+                              }}
+                         >
+                              Save
+                         </button>
                          <button
                               className="edit-buttons"
                               onClick={() => {

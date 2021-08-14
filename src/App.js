@@ -7,19 +7,40 @@ import Home from "./components/Home/Home";
 import Database from "./models/Database";
 import EditNote from "./components/Home/sub-components/EditNote";
 
+const electron = window.require("electron");
+const { ipcRenderer } = electron;
+
 const App = () => {
      const [database, setDatabase] = useState(new Database({}));
      const [edit, setEdit] = useState(false);
+
+     function saveNote(note) {
+          let index = -1;
+          database.notes.forEach((n) => {
+               if (n.uid === note.uid) return (index = database.notes.indexOf(n));
+          });
+          if (index === -1) {
+               database.notes = [...database.notes, note.toJSON()];
+          } else {
+               database.notes = database.notes.map((n) => (note.uid === n.uid ? note.toJSON() : n));
+          }
+          database.lastSync = new Date().getTime();
+          ipcRenderer.send("db:update", database);
+          setEdit(false);
+          Database.upload(database);
+     }
 
      return (
           <Router>
                {edit && (
                     <EditNote
-                         edit={edit}
+                         edit={JSON.parse(JSON.stringify(edit))}
                          database={database}
                          trigger={() => {
                               setEdit(false);
-                              console.log(edit);
+                         }}
+                         save={(n) => {
+                              saveNote(n);
                          }}
                     />
                )}
@@ -33,7 +54,6 @@ const App = () => {
                               database={database}
                               trigger={(e) => {
                                    setEdit(e);
-                                   console.log(e);
                               }}
                               edit={edit}
                          />

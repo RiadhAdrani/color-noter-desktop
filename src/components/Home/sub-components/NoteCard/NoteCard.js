@@ -1,10 +1,13 @@
 import Theme from "../../../../models/Theme";
 
 const NoteCard = (props) => {
+     console.log(props.note);
+
      const uid = props.note.uid;
      const title = props.note.title;
      const content = props.note.content;
      const color = props.note.color ? Theme[props.note.color] : Theme[0];
+     console.log(color);
 
      const style = `
      #container-${uid}{

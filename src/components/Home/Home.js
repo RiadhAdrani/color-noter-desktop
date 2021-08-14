@@ -7,6 +7,7 @@ import trash from "../../assets/trash.svg";
 import select from "../../assets/check-square.svg";
 import plus from "../../assets/plus.svg";
 import NoteCard from "./sub-components/NoteCard/NoteCard";
+import Note from "../../models/Note";
 
 const Home = (props) => {
      const database = props.database;
@@ -43,6 +44,9 @@ const Home = (props) => {
                     })}
                </div>
                <div
+                    onClick={() => {
+                         props.trigger(new Note({}));
+                    }}
                     style={{
                          position: "absolute",
                          bottom: "40px",
