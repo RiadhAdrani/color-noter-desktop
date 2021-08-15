@@ -20,9 +20,9 @@ const App = () => {
                if (n.uid === note.uid) return (index = database.notes.indexOf(n));
           });
           if (index === -1) {
-               database.notes = [...database.notes, note.toJSON()];
+               database.notes = [...database.notes, note];
           } else {
-               database.notes = database.notes.map((n) => (note.uid === n.uid ? note.toJSON() : n));
+               database.notes = database.notes.map((n) => (note.uid === n.uid ? note : n));
           }
           database.lastSync = new Date().getTime();
           ipcRenderer.send("db:update", database);

@@ -4,7 +4,6 @@ import ColorsWindow from "./ColorsWindow";
 import paint from "../../../assets/paint-brush.svg";
 import Todo from "./Todo";
 import ToDo from "../../../models/ToDo";
-import Note from "../../../models/Note";
 
 const EditNote = (props) => {
      const [color, setColor] = useState(props.edit ? props.edit.color : 0);
@@ -182,14 +181,15 @@ const EditNote = (props) => {
                          <button
                               className="edit-buttons"
                               onClick={() => {
-                                   const noteToSave = new Note({
+                                   const noteToSave = {
                                         color: `${color}`,
                                         content: content,
-                                        modificationDate: new Date().getTime(),
                                         creationDate: props.edit.creationDate,
+                                        modificationDate: new Date().getTime(),
                                         title: title,
                                         uid: props.edit.uid,
-                                   });
+                                   };
+                                   console.log(noteToSave);
                                    props.save(noteToSave);
                               }}
                          >

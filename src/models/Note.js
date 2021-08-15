@@ -4,10 +4,10 @@ class Note {
      constructor({
           color = 0,
           content = "",
-          creationDate = undefined,
-          modificationDate = undefined,
+          creationDate = new Date().getTime(),
+          modificationDate = new Date().getTime(),
           title = "Note",
-          uid = `C${uuid()}-${new Date().getTime()}}`,
+          uid = `C${uuid()}-${new Date().getTime()}`,
      }) {
           this.color = color;
           this.creationDate = creationDate ? creationDate : new Date().getTime();
@@ -26,6 +26,14 @@ class Note {
                title: this.title,
                uid: this.uid,
           };
+     }
+
+     static newTextNote() {
+          return new Note({ uid: `T${uuid()}-${new Date().getTime()}`, content: "" });
+     }
+
+     static newToDo() {
+          return new Note({ uid: `C${uuid()}-${new Date().getTime()}`, content: [] });
      }
 }
 

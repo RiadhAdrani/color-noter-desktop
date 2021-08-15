@@ -6,7 +6,7 @@
      overflow-y: scroll;
 }
 
-#sticky-top {
+#sticky-topp {
      position: sticky;
      top: 0%;
      margin-bottom: 10px;
@@ -19,13 +19,21 @@
 }
 
 #notes-list {
-     margin-top: 10px;
+     padding: 30px;
      display: inline-flex;
      align-self: center;
      flex-direction: row;
-     justify-content: center;
-     align-items: flex-start;
+     justify-content: space-evenly;
      flex-wrap: wrap;
      background-color: #282c34c9;
      text-align: start;
+     overflow-y: auto;
+}
+
+.floating-button {
+     transition-duration: 0.2s;
+}
+
+.floating-button:hover {
+     transform: translateX(-15px);
 }
