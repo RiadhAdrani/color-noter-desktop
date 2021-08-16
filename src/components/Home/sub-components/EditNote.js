@@ -53,6 +53,7 @@ const EditNote = (props) => {
           text-align: start; 
           padding:10px;
           font-family:inherit;
+          font-size:1.1em;
           resize:none;
      }
      .edit-buttons{
@@ -189,7 +190,6 @@ const EditNote = (props) => {
                                         title: title,
                                         uid: props.edit.uid,
                                    };
-                                   console.log(noteToSave);
                                    props.save(noteToSave);
                               }}
                          >

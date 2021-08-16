@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Theme from "../../models/Theme";
 import logout from "../../assets/door-open.svg";
+import logo from "../../assets/color-noter.png";
 import "./SideBar.css";
 
 const SideBar = (props) => {
@@ -58,8 +59,21 @@ const SideBar = (props) => {
      return (
           <div className="side-bar" style={{ display: props.show ? "flex" : "none" }}>
                <style>{style}</style>
+
                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <p className="logo" style={{ marginBottom: "0px" }}>
+                    <img
+                         src={logo}
+                         alt="logo"
+                         width="100px"
+                         height="100px"
+                         style={{
+                              marginRight: "auto",
+                              marginLeft: "auto",
+                              marginTop: "30px",
+                              borderRadius: "10px",
+                         }}
+                    />
+                    <p className="logo" style={{ marginBottom: "0px", marginTop: "15px" }}>
                          Color Noter
                     </p>
                     <p style={{ fontSize: "0.9em", textAlign: "center", marginBottom: "50px" }}>

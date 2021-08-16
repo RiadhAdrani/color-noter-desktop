@@ -6,6 +6,7 @@ import Loading from "./components/Loading/Loading";
 import Home from "./components/Home/Home";
 import Database from "./models/Database";
 import EditNote from "./components/Home/sub-components/EditNote";
+import ChangeColor from "./components/ChangeColor";
 
 const electron = window.require("electron");
 const { ipcRenderer } = electron;
@@ -13,6 +14,11 @@ const { ipcRenderer } = electron;
 const App = () => {
      const [database, setDatabase] = useState(new Database({}));
      const [edit, setEdit] = useState(false);
+     const [colorWindow, setColorWindow] = useState({
+          show: false,
+          color: 0,
+          onSelect: (color) => {},
+     });
 
      function saveNote(note) {
           let index = -1;
@@ -32,6 +38,21 @@ const App = () => {
 
      return (
           <Router>
+               {colorWindow.show && (
+                    <ChangeColor
+                         current={colorWindow.color}
+                         onExit={() => {
+                              setColorWindow({ ...colorWindow, show: false });
+                         }}
+                         onSelect={(color) => {
+                              colorWindow.onSelect(color);
+                              setColorWindow({ ...colorWindow, show: false });
+                              database.lastSync = new Date().getTime();
+                              ipcRenderer.send("db:update", database);
+                              Database.upload(database);
+                         }}
+                    />
+               )}
                {edit && (
                     <EditNote
                          edit={JSON.parse(JSON.stringify(edit))}
@@ -54,6 +75,9 @@ const App = () => {
                               database={database}
                               trigger={(e) => {
                                    setEdit(e);
+                              }}
+                              setColorWindow={(json) => {
+                                   setColorWindow(json);
                               }}
                               edit={edit}
                          />

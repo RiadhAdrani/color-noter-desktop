@@ -28,12 +28,12 @@ class Note {
           };
      }
 
-     static newTextNote() {
-          return new Note({ uid: `T${uuid()}-${new Date().getTime()}`, content: "" });
+     static newTextNote(color) {
+          return new Note({ uid: `T${uuid()}-${new Date().getTime()}`, content: "", color: color });
      }
 
-     static newToDo() {
-          return new Note({ uid: `C${uuid()}-${new Date().getTime()}`, content: [] });
+     static newToDo(color) {
+          return new Note({ uid: `C${uuid()}-${new Date().getTime()}`, content: [], color: color });
      }
 }
 

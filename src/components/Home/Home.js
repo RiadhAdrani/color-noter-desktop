@@ -39,6 +39,20 @@ const Home = (props) => {
                                    onClick={() => {
                                         props.trigger(e);
                                    }}
+                                   onPaint={() => {
+                                        props.setColorWindow({
+                                             show: true,
+                                             color: e.color,
+                                             onSelect: (color) => {
+                                                  database.notes.forEach((note) => {
+                                                       if (note.uid === e.uid) {
+                                                            note.color = color;
+                                                            return;
+                                                       }
+                                                  });
+                                             },
+                                        });
+                                   }}
                               />
                          );
                     })}
@@ -57,7 +71,7 @@ const Home = (props) => {
                     <div
                          className="floating-button"
                          onClick={() => {
-                              props.trigger(Note.newToDo());
+                              props.trigger(Note.newToDo(database.color));
                          }}
                          style={{
                               padding: "20px",
@@ -81,7 +95,7 @@ const Home = (props) => {
                     <div
                          className="floating-button"
                          onClick={() => {
-                              props.trigger(Note.newTextNote());
+                              props.trigger(Note.newTextNote(database.color));
                          }}
                          style={{
                               padding: "20px",

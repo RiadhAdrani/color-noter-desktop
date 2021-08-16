@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Database from "../../models/Database";
+import logo from "../../assets/color-noter.png";
 import "./Loading.css";
 
 const electron = window.require("electron");
@@ -30,9 +31,16 @@ const Loading = (props) => {
 
      return (
           <div className="loading-screen">
-               <div className="loader"></div>
-               <h2>Color Noter</h2>
+               <img
+                    src={logo}
+                    alt="color noter"
+                    width="150px"
+                    height="150px"
+                    style={{ borderRadius: "10px", marginBottom: "15px" }}
+               />
+               <h2>Color Noter : Desktop</h2>
                <p>Fetching data from server...</p>
+               <div className="loader"></div>
           </div>
      );
 };

@@ -1,16 +1,16 @@
 import { v4 } from "uuid";
 
 const ToDo = ({
-     creationDate,
+     creationDate = new Date().getTime(),
      description = "new to do",
      doneDate = -1,
-     dueDate,
-     modificationDate,
+     dueDate = -1,
+     modificationDate = new Date().getTime(),
      priority = "LOW",
      uid,
 }) => {
      return {
-          creationDate: creationDate ? creationDate : new Date().getTime(),
+          creationDate: creationDate,
           description: description,
           doneDate: doneDate,
           dueDate: dueDate,
