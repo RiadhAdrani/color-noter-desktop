@@ -8,6 +8,9 @@ import select from "../../assets/check-square.svg";
 import paragraph from "../../assets/paragraph.svg";
 import NoteCard from "./sub-components/NoteCard/NoteCard";
 import Note from "../../models/Note";
+import Database from "../../models/Database";
+const electron = window.require("electron");
+const { ipcRenderer } = electron;
 
 const Home = (props) => {
      const database = props.database;
@@ -38,6 +41,17 @@ const Home = (props) => {
                                    key={e.uid}
                                    onClick={() => {
                                         props.trigger(e);
+                                   }}
+                                   erase={() => {
+                                        props.setDatabase({
+                                             ...database,
+                                             lastSync: new Date().getTime(),
+                                             notes: database.notes.filter(
+                                                  (note) => note.uid !== e.uid
+                                             ),
+                                        });
+                                        ipcRenderer.send("db:update", database);
+                                        Database.upload(database);
                                    }}
                                    onPaint={() => {
                                         props.setColorWindow({

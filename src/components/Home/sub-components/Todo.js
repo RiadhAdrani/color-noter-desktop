@@ -67,6 +67,7 @@ const Todo = (props) => {
                     type="text"
                     value={props.content[props.index].description}
                     className={"input-box"}
+                    maxLength={75}
                     disabled={todo.doneDate > -1}
                     id={`input-box-${props.content[props.index].uid}`}
                     onChange={(e) => {

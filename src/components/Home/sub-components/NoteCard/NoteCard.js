@@ -3,12 +3,14 @@ import check from "../../../../assets/check-box.svg";
 import uncheck from "../../../../assets/uncheck-box.svg";
 import paint from "../../../../assets/paint-brush.svg";
 import trash from "../../../../assets/trash.svg";
+import { useState } from "react";
 
 const NoteCard = (props) => {
      const uid = props.note.uid;
      const title = props.note.title;
      const content = props.note.content;
      const color = props.note.color ? Theme[props.note.color] : Theme[0];
+     const [confirm, setConfirm] = useState(false);
 
      const style = `
      #container-${uid}{
@@ -87,7 +89,29 @@ const NoteCard = (props) => {
                <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
                     <div id={`note-preview-${uid}`}>
                          <h3 id={`note-title-${uid}`}>{title}</h3>
-                         {uid.split("")[0] === "T" ? (
+                         {confirm ? (
+                              <div>
+                                   <p>Are you sure you want to delete this note?</p>
+                                   <div>
+                                        <button
+                                             onClick={(e) => {
+                                                  props.erase();
+                                                  e.stopPropagation();
+                                             }}
+                                        >
+                                             confirm
+                                        </button>
+                                        <button
+                                             onClick={(e) => {
+                                                  setConfirm(false);
+                                                  e.stopPropagation();
+                                             }}
+                                        >
+                                             cancel
+                                        </button>
+                                   </div>
+                              </div>
+                         ) : uid.split("")[0] === "T" ? (
                               <p id={`note-content-${uid}`}>{content.toString()}</p>
                          ) : (
                               <div id={`note-content-${uid}`}>
@@ -116,6 +140,7 @@ const NoteCard = (props) => {
                               alt="change color"
                               id={`note-card-icons-${uid}`}
                               onClick={(e) => {
+                                   if (confirm) setConfirm(false);
                                    props.onPaint();
                                    e.stopPropagation();
                               }}
@@ -125,7 +150,7 @@ const NoteCard = (props) => {
                               alt="delete"
                               id={`note-card-icons-${uid}`}
                               onClick={(e) => {
-                                   alert("delete");
+                                   setConfirm(true);
                                    e.stopPropagation();
                               }}
                          />

@@ -80,6 +80,9 @@ const App = () => {
                                    setColorWindow(json);
                               }}
                               edit={edit}
+                              setDatabase={(db) => {
+                                   setDatabase(db);
+                              }}
                          />
                     </Route>
                     <Route exact path="/settings">

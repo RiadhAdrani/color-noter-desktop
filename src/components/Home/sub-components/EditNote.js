@@ -110,6 +110,7 @@ const EditNote = (props) => {
                          <input
                               id="title-box"
                               type="text"
+                              maxLength={50}
                               placeholder="title"
                               value={title}
                               onChange={(e) => setTitle(e.target.value)}
@@ -144,6 +145,7 @@ const EditNote = (props) => {
                               type="text"
                               placeholder="what's in your mind today?"
                               value={content}
+                              maxLength={5000}
                               onChange={(e) => setContent(e.target.value)}
                          />
                     ) : (
