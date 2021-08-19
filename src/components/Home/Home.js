@@ -7,9 +7,12 @@ import select from "../../assets/check-square.svg";
 import paragraph from "../../assets/paragraph.svg";
 import NoteCard from "./sub-components/NoteCard/NoteCard";
 import Note from "../../models/Note";
+import { useState } from "react";
 
 const Home = (props) => {
      const theme = Theme[props.database.color];
+     const [val, setVal] = useState("");
+     const [showSearch, setShow] = useState(false);
 
      return (
           <div id="home-container">
@@ -20,41 +23,78 @@ const Home = (props) => {
                     }}
                >
                     <p id="home-title">Welcome back {props.database.id} !</p>
-                    <div id="tool-bar">
-                         <Tool icon={search} name={"Search"} onClick={() => {}} />
+                    <div id="tool-bar" style={{ display: "flex", flexDirection: "row" }}>
+                         <Tool
+                              icon={search}
+                              name={"Search"}
+                              onClick={() => {
+                                   setShow(!showSearch);
+                                   setVal("");
+                              }}
+                         />
+                         {showSearch && (
+                              <input
+                                   type="text"
+                                   style={{
+                                        padding: "5px",
+                                        display: "inline-flex",
+                                        flexDirection: "row",
+                                        marginTop: "auto",
+                                        marginBottom: "auto",
+                                        fontFamily: "inherit",
+                                        fontSize: "1.1em",
+                                   }}
+                                   value={val}
+                                   onChange={(e) => {
+                                        setVal(e.target.value);
+                                   }}
+                              />
+                         )}
+
                          <Tool icon={sort} name={"Sort"} onClick={() => {}} />
                     </div>
                </div>
 
                <div id="notes-list">
-                    {props.database.notes.map((e) => {
-                         return (
-                              <NoteCard
-                                   note={e}
-                                   key={e.uid}
-                                   onClick={() => {
-                                        props.trigger(e);
-                                   }}
-                                   erase={() => {
-                                        props.delete(e.uid);
-                                   }}
-                                   onPaint={() => {
-                                        props.setColorWindow({
-                                             show: true,
-                                             color: e.color,
-                                             onSelect: (color) => {
-                                                  props.database.notes.forEach((note) => {
-                                                       if (note.uid === e.uid) {
-                                                            note.color = color;
-                                                            return;
-                                                       }
-                                                  });
-                                             },
-                                        });
-                                   }}
-                              />
-                         );
-                    })}
+                    {props.database.notes
+                         .filter((n) => {
+                              if (
+                                   val.trim().toLowerCase() === "" ||
+                                   Note.contentContains(n, val.trim().toLowerCase())
+                              ) {
+                                   return true;
+                              } else {
+                                   return false;
+                              }
+                         })
+                         .map((e) => {
+                              return (
+                                   <NoteCard
+                                        note={e}
+                                        key={e.uid}
+                                        onClick={() => {
+                                             props.trigger(e);
+                                        }}
+                                        erase={() => {
+                                             props.delete(e.uid);
+                                        }}
+                                        onPaint={() => {
+                                             props.setColorWindow({
+                                                  show: true,
+                                                  color: e.color,
+                                                  onSelect: (color) => {
+                                                       props.database.notes.forEach((note) => {
+                                                            if (note.uid === e.uid) {
+                                                                 note.color = color;
+                                                                 return;
+                                                            }
+                                                       });
+                                                  },
+                                             });
+                                        }}
+                                   />
+                              );
+                         })}
                </div>
                <div
                     style={{

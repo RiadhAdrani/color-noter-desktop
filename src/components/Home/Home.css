@@ -6,12 +6,6 @@
      overflow-y: scroll;
 }
 
-#sticky-topp {
-     position: sticky;
-     top: 0%;
-     margin-bottom: 10px;
-}
-
 #home-title {
      padding: 20px;
      margin: 0;

@@ -35,6 +35,17 @@ class Note {
      static newToDo(color) {
           return new Note({ uid: `C${uuid()}-${new Date().getTime()}`, content: [], color: color });
      }
+
+     static contentContains(note, string) {
+          if (note.uid.split("")[0] === "T")
+               return note.content.toLowerCase().trim().includes(string.trim().toLowerCase());
+          else {
+               return JSON.stringify(note.content)
+                    .toLocaleLowerCase()
+                    .trim()
+                    .includes(string.trim().toLocaleLowerCase());
+          }
+     }
 }
 
 export default Note;
