@@ -5,7 +5,7 @@ import logo from "../../assets/color-noter.png";
 import "./SideBar.css";
 
 const SideBar = (props) => {
-     const theme = Theme[props.color];
+     const theme = Theme[props.database.color ? props.database.color : 0];
 
      const style = `
      .side-bar {

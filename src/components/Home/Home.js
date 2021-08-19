@@ -3,18 +3,13 @@ import Theme from "../../models/Theme";
 import Tool from "./sub-components/Tool/Tool";
 import search from "../../assets/search.svg";
 import sort from "../../assets/sort.svg";
-import trash from "../../assets/trash.svg";
 import select from "../../assets/check-square.svg";
 import paragraph from "../../assets/paragraph.svg";
 import NoteCard from "./sub-components/NoteCard/NoteCard";
 import Note from "../../models/Note";
-import Database from "../../models/Database";
-const electron = window.require("electron");
-const { ipcRenderer } = electron;
 
 const Home = (props) => {
-     const database = props.database;
-     const theme = Theme[database.color];
+     const theme = Theme[props.database.color];
 
      return (
           <div id="home-container">
@@ -24,17 +19,15 @@ const Home = (props) => {
                          backgroundImage: `linear-gradient(to right, ${theme.dark}, ${theme.darker})`,
                     }}
                >
-                    <p id="home-title">Welcome back {database.id} !</p>
+                    <p id="home-title">Welcome back {props.database.id} !</p>
                     <div id="tool-bar">
                          <Tool icon={search} name={"Search"} onClick={() => {}} />
-                         <Tool icon={select} name={"Select"} onClick={() => {}} />
                          <Tool icon={sort} name={"Sort"} onClick={() => {}} />
-                         <Tool icon={trash} name={"Delete"} onClick={() => {}} />
                     </div>
                </div>
 
                <div id="notes-list">
-                    {database.notes.map((e) => {
+                    {props.database.notes.map((e) => {
                          return (
                               <NoteCard
                                    note={e}
@@ -43,22 +36,14 @@ const Home = (props) => {
                                         props.trigger(e);
                                    }}
                                    erase={() => {
-                                        props.setDatabase({
-                                             ...database,
-                                             lastSync: new Date().getTime(),
-                                             notes: database.notes.filter(
-                                                  (note) => note.uid !== e.uid
-                                             ),
-                                        });
-                                        ipcRenderer.send("db:update", database);
-                                        Database.upload(database);
+                                        props.delete(e.uid);
                                    }}
                                    onPaint={() => {
                                         props.setColorWindow({
                                              show: true,
                                              color: e.color,
                                              onSelect: (color) => {
-                                                  database.notes.forEach((note) => {
+                                                  props.database.notes.forEach((note) => {
                                                        if (note.uid === e.uid) {
                                                             note.color = color;
                                                             return;
@@ -85,7 +70,7 @@ const Home = (props) => {
                     <div
                          className="floating-button"
                          onClick={() => {
-                              props.trigger(Note.newToDo(database.color));
+                              props.trigger(Note.newToDo(props.database.color));
                          }}
                          style={{
                               padding: "20px",
@@ -109,7 +94,7 @@ const Home = (props) => {
                     <div
                          className="floating-button"
                          onClick={() => {
-                              props.trigger(Note.newTextNote(database.color));
+                              props.trigger(Note.newTextNote(props.database.color));
                          }}
                          style={{
                               padding: "20px",

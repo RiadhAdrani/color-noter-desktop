@@ -96,6 +96,7 @@ const NoteCard = (props) => {
                                         <button
                                              onClick={(e) => {
                                                   props.erase();
+                                                  setConfirm(false);
                                                   e.stopPropagation();
                                              }}
                                         >
@@ -116,7 +117,7 @@ const NoteCard = (props) => {
                          ) : (
                               <div id={`note-content-${uid}`}>
                                    {content.map((item) => (
-                                        <div style={{ marginBottom: "10px" }}>
+                                        <div style={{ marginBottom: "10px" }} key={item.uid}>
                                              <img
                                                   src={item.doneDate === -1 ? uncheck : check}
                                                   height={"15px"}

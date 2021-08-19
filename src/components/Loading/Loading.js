@@ -16,12 +16,14 @@ const Loading = (props) => {
           db.retrieveUserData(() => {
                ipcRenderer.send("db:get");
                ipcRenderer.on("db:send", (event, data) => {
-                    if (data.lastSync >= db.lastSync) {
+                    if (data.lastSync > db.lastSync && data.id && data.email) {
                          Database.upload(data);
                          props.setDatabase(data);
+                         console.log("local: ", data);
                     } else {
                          ipcRenderer.send("db:update", db);
                          props.setDatabase(db);
+                         console.log("cloud: ", db);
                     }
 
                     history.push("/home");

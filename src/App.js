@@ -20,6 +20,13 @@ const App = () => {
           onSelect: (color) => {},
      });
 
+     function save() {
+          database.lastSync = new Date().getTime();
+          ipcRenderer.send("db:update", database);
+          Database.upload(database);
+          console.log(database.notes);
+     }
+
      function saveNote(note) {
           let index = -1;
           database.notes.forEach((n) => {
@@ -30,10 +37,13 @@ const App = () => {
           } else {
                database.notes = database.notes.map((n) => (note.uid === n.uid ? note : n));
           }
-          database.lastSync = new Date().getTime();
-          ipcRenderer.send("db:update", database);
+          save();
           setEdit(false);
-          Database.upload(database);
+     }
+
+     function deleteNote(uid) {
+          database.notes = database.notes.filter((e) => e.uid !== uid);
+          save();
      }
 
      return (
@@ -65,7 +75,7 @@ const App = () => {
                          }}
                     />
                )}
-               <SideBar show={database.id} color={database.color} />
+               <SideBar show={database.id} color={database.color} database={database} />
                <Switch style={{ flex: 1 }}>
                     <Route exact path="/">
                          <Loading setDatabase={setDatabase} />
@@ -78,6 +88,12 @@ const App = () => {
                               }}
                               setColorWindow={(json) => {
                                    setColorWindow(json);
+                              }}
+                              save={() => {
+                                   save();
+                              }}
+                              delete={(uid) => {
+                                   deleteNote(uid);
                               }}
                               edit={edit}
                               setDatabase={(db) => {

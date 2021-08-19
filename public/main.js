@@ -26,11 +26,6 @@ ipcMain.on("db:update", (event, data) => {
      fs.writeFileSync("local_data/db.json", JSON.stringify(data), "utf8", () => {});
 });
 
-ipcMain.on("note:edit", (event, note) => {
-     console.log("note:edit => db:open");
-     win.webContents.send("note:open", note);
-});
-
 app.on("ready", createWindow);
 
 app.on("window-all-closed", function () {
