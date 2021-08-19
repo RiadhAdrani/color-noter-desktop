@@ -7,6 +7,7 @@ import Home from "./components/Home/Home";
 import Database from "./models/Database";
 import EditNote from "./components/Home/sub-components/EditNote";
 import ChangeColor from "./components/ChangeColor";
+import About from "./components/About";
 
 const electron = window.require("electron");
 const { ipcRenderer } = electron;
@@ -105,7 +106,7 @@ const App = () => {
                          <h1>Yes</h1>
                     </Route>
                     <Route exact path="/about">
-                         <h1>About</h1>
+                         <About color={database.color} />
                     </Route>
                </Switch>
           </Router>
