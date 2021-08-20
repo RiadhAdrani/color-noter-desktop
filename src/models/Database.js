@@ -25,32 +25,38 @@ class Database {
           this.notes = notes ? notes : [];
      }
 
-     async getNotes() {
-          const data = await db
-               .collection("users")
-               .doc("AoNWSxy0nXVoyslew7hI")
-               .collection("user_notes")
-               .get();
+     async getNotes(uuid) {
+          const data = await db.collection("users").doc(uuid).collection("user_notes").get();
 
           data.docs.forEach((n) => {
                const note = n.data();
-               this.notes.push(
-                    new Note({
-                         color: note.color,
-                         creationDate: note.creationDate,
-                         modificationDate: note.modificationDate,
-                         title: note.title,
-                         uid: note.uid,
-                         content: note.content,
-                    })
-               );
+               let isDuplicate = false;
+
+               this.notes.forEach((item) => {
+                    if (item.uid === note.uid) {
+                         isDuplicate = true;
+                    }
+               });
+
+               if (!isDuplicate) {
+                    this.notes.push(
+                         new Note({
+                              color: note.color,
+                              creationDate: note.creationDate,
+                              modificationDate: note.modificationDate,
+                              title: note.title,
+                              uid: note.uid,
+                              content: note.content,
+                         })
+                    );
+               }
           });
 
           return true;
      }
 
-     async getData() {
-          const base = await db.collection("users").doc("AoNWSxy0nXVoyslew7hI").get();
+     async getData(uuid) {
+          const base = await db.collection("users").doc(uuid).get();
           const data = base.data();
           this.email = data.email;
           this.lastSync = data.last_sync;
@@ -62,10 +68,30 @@ class Database {
           return true;
      }
 
-     async retrieveUserData(onSynced = () => {}, onFailed = () => {}) {
-          return Promise.all([this.getData(), this.getNotes()]).then(() => {
+     async retrieveUserData(id, onSynced = () => {}, onFailed = () => {}) {
+          let uuid = undefined;
+          await Database.getUserUUID(id, (result) => {
+               uuid = result;
+          });
+          if (!uuid) {
+               onFailed();
+          }
+          return Promise.all([this.getData(uuid), this.getNotes(uuid)]).then(() => {
                onSynced();
           });
+     }
+
+     static async getUserUUID(id, onSuccess = () => {}) {
+          let uuid = undefined;
+          const users = await db.collection("users").get();
+          users.docs.forEach((user) => {
+               if (user.data().id === id) {
+                    uuid = user.id;
+               }
+          });
+          onSuccess(uuid);
+
+          return true;
      }
 
      static async upload(dataObject) {
@@ -112,36 +138,23 @@ class Database {
           } else return true;
      }
 
-     static async updateCloudDatabaseInfo(newData) {
-          const users = await db.collection("users").get();
-          users.docs.forEach((user) => {
-               if (user.data().id === newData.id) {
-                    const info = {
-                         email: newData.email,
-                         id: newData.id,
-                         last_sync: newData.lastSync,
-                         password: newData.password,
-                         user_color: newData.color,
-                         user_theme: newData.theme,
-                    };
-                    console.log(info);
-                    return true;
-               }
-          });
-     }
-
-     static async updateCloudDatabaseNotes(newNotes) {
-          console.log(newNotes);
-          return true;
-     }
-
-     static async updateCloud(db, onSynced = () => {}) {
-          return Promise.all([
-               Database.updateCloudDatabaseInfo(db),
-               Database.updateCloudDatabaseNotes(db.notes),
-          ]).then(() => {
-               onSynced();
-          });
+     static async verifyCoordinate(
+          uuid,
+          username,
+          password,
+          onSuccess = () => {},
+          onFailure = () => {}
+     ) {
+          const base = await db.collection("users").doc(uuid).get();
+          if (!base.exists) {
+               onFailure();
+               return;
+          }
+          if (password === base.data().password && username === base.data().id) {
+               onSuccess(uuid);
+          } else {
+               onFailure();
+          }
      }
 }
 

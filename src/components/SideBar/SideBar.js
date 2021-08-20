@@ -1,11 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Theme from "../../models/Theme";
 import logout from "../../assets/door-open.svg";
 import logo from "../../assets/color-noter.png";
 import "./SideBar.css";
+import Database from "../../models/Database";
+
+const electron = window.require("electron");
+const { ipcRenderer } = electron;
 
 const SideBar = (props) => {
      const theme = Theme[props.database.color ? props.database.color : 0];
+     const history = useHistory();
 
      const style = `
      .side-bar {
@@ -35,7 +40,7 @@ const SideBar = (props) => {
           background-color: #272930;
           text-decoration: none;
           color: white;
-          border-left: 5px white solid;
+          border-left: 5px ${theme.normal} solid;
           margin-bottom: 10px;
           margin-right: 5px;
           padding: 10px;
@@ -44,7 +49,8 @@ const SideBar = (props) => {
      .side-bar-bottom {
           margin-top: auto;
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
+          text-decoration:none;
      }
      .side-bar-bottom:hover,.router-link:hover{
           background-color: #161616;
@@ -104,25 +110,26 @@ const SideBar = (props) => {
                          About
                     </Link>
                </div>
-               <div className="side-bar-bottom">
-                    <div
+               <Link
+                    className="router-link"
+                    onClick={() => {
+                         props.setDatabase();
+                         ipcRenderer.send("db:update", new Database({ id: "", lastSync: -1 }));
+                         history.push("/login");
+                    }}
+                    style={{ marginTop: "auto" }}
+               >
+                    <img
+                         src={logout}
+                         alt={"logout"}
+                         width={"30px"}
                          style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              borderLeft: `5px solid ${theme.normal}`,
-                              paddingLeft: "10px",
-                              marginBottom: "5px",
+                              filter: "invert(100)",
+                              marginRight: "20px",
                          }}
-                    >
-                         <img
-                              src={logout}
-                              alt={"logout"}
-                              width={"30px"}
-                              style={{ filter: "invert(100)", marginRight: "20px" }}
-                         />
-                         <p>Log out</p>
-                    </div>
-               </div>
+                    />
+                    Log out
+               </Link>
           </div>
      );
 };

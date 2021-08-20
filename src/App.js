@@ -8,6 +8,8 @@ import Database from "./models/Database";
 import EditNote from "./components/Home/sub-components/EditNote";
 import ChangeColor from "./components/ChangeColor";
 import About from "./components/About";
+import Settings from "./components/Settings";
+import SignIn from "./components/SignIn";
 
 const electron = window.require("electron");
 const { ipcRenderer } = electron;
@@ -76,7 +78,14 @@ const App = () => {
                          }}
                     />
                )}
-               <SideBar show={database.id} color={database.color} database={database} />
+               <SideBar
+                    show={database.id}
+                    color={database.color}
+                    database={database}
+                    setDatabase={() => {
+                         setDatabase(new Database({}));
+                    }}
+               />
                <Switch style={{ flex: 1 }}>
                     <Route exact path="/">
                          <Loading setDatabase={setDatabase} />
@@ -103,10 +112,30 @@ const App = () => {
                          />
                     </Route>
                     <Route exact path="/settings">
-                         <h1>Yes</h1>
+                         <Settings
+                              color={database.color}
+                              useColorWindow={() => {
+                                   setColorWindow({
+                                        show: true,
+                                        color: database.color,
+                                        onSelect: (color) => {
+                                             database.color = color;
+                                             save();
+                                        },
+                                   });
+                              }}
+                         />
                     </Route>
                     <Route exact path="/about">
                          <About color={database.color} />
+                    </Route>
+                    <Route exact path="/login">
+                         <SignIn
+                              setDatabase={(db) => {
+                                   database.id = db.id;
+                                   database.lastSync = db.lastSync;
+                              }}
+                         />
                     </Route>
                </Switch>
           </Router>

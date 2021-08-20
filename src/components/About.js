@@ -16,7 +16,7 @@ const About = (props) => {
           margin-right:auto;
           justify-content:center;
           line-height:1.5em;
-          padding:20px; 
+          flex:1;
      }
 
      #about-logo{
@@ -31,6 +31,9 @@ const About = (props) => {
           cursor:pointer;
           display:inline;
           padding:5px;
+          width:60%;
+          margin-left:auto;
+          margin-right:auto;
           transition-duration:0.33s;
           background-color:${Theme[props.color].dark};
      }

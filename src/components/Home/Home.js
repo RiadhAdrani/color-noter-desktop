@@ -7,12 +7,20 @@ import select from "../../assets/check-square.svg";
 import paragraph from "../../assets/paragraph.svg";
 import NoteCard from "./sub-components/NoteCard/NoteCard";
 import Note from "../../models/Note";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const Home = (props) => {
      const theme = Theme[props.database.color];
      const [val, setVal] = useState("");
      const [showSearch, setShow] = useState(false);
+     const history = useHistory();
+
+     useEffect(() => {
+          if (!props.database.id) {
+               history.push("/login");
+          }
+     });
 
      return (
           <div id="home-container">
@@ -51,7 +59,13 @@ const Home = (props) => {
                               />
                          )}
 
-                         <Tool icon={sort} name={"Sort"} onClick={() => {}} />
+                         <Tool
+                              icon={sort}
+                              name={"Sort"}
+                              onClick={() => {
+                                   console.log(props.database);
+                              }}
+                         />
                     </div>
                </div>
 
@@ -60,6 +74,10 @@ const Home = (props) => {
                          .filter((n) => {
                               if (
                                    val.trim().toLowerCase() === "" ||
+                                   n.title
+                                        .trim()
+                                        .toLowerCase()
+                                        .includes(val.trim().toLowerCase()) ||
                                    Note.contentContains(n, val.trim().toLowerCase())
                               ) {
                                    return true;
