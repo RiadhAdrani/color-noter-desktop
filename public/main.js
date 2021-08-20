@@ -7,6 +7,7 @@ function createWindow() {
      win = new BrowserWindow({
           minWidth: 800,
           minHeight: 800,
+          icon: __dirname + "/app.ico",
           webPreferences: {
                nodeIntegration: true,
                contextIsolation: false,
@@ -14,6 +15,7 @@ function createWindow() {
           },
      });
 
+     win.removeMenu();
      win.loadURL("http://localhost:3000");
 }
 

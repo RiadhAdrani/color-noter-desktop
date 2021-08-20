@@ -1,70 +1,60 @@
-# Getting Started with Create React App
+<img src="./md/color-noter.png" alt="drawing" width="150" style='border-radius:10px'/>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Color Noter : Desktop
 
-## Available Scripts
+**Version 1.0.0**
 
-In the project directory, you can run:
+**20-08-2021**
 
-### `yarn start`
+Color Noter is a color based note taking app that offer the user the ability to write and save his ideas and todos in an easy to use environment.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+_This is a learning project, it is not meant to be published or distributed for the public audiance._
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### Contributors
 
-### `yarn test`
+-    Riadh Adrani (owner) <https://github.com/RiadhAdrani>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Technologies
 
-### `yarn build`
+-    Electron Js
+-    React Js
+-    Javascript HTML & CSS (obviously)
+-    Firebase Firestore
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Available on Android too
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Check this repo for the android version : [color-noter-plus](https://github.com/RiadhAdrani/color_note_plus)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Features
 
-### `yarn eject`
+-    Text Note (Up to 5000 characters)
+-    ToDo and Check list notes
+-    Change application color.
+-    Every single note could have a custom color.
+-    Synchronize notes
+-    Simple User Interface.
+-    Dark Theme only because Light Theme sucks !
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### Screenshots
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Login Screen**
+<img src="./md/login.png" alt="drawing" style='border-radius:10px'/>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+**Home Screen**
+<img src="./md/home.png" alt="drawing" style='border-radius:10px'/>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**Settings Section**
+Changing Color only :)
+<img src="./md/settings.png" alt="drawing" style='border-radius:10px'/>
 
-## Learn More
+**Color Changing Window**
+<img src="./md/change-color.png" alt="drawing" style='border-radius:10px'/>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**About**
+<img src="./md/about.png" alt="drawing" style='border-radius:10px'/>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Text Note**
+<img src="./md/note-text.png" alt="drawing" style='border-radius:10px'/>
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**To do**
+<img src="./md/note-todo.png" alt="drawing" style='border-radius:10px'/>
