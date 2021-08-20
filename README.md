@@ -35,26 +35,27 @@ Check this repo for the android version : [color-noter-plus](https://github.com/
 -    Simple User Interface.
 -    Dark Theme only because Light Theme sucks !
 
-#### Screenshots
+## Screenshots
 
 **Login Screen**
-<img src="./md/login.png" alt="drawing" style='border-radius:10px'/>
+
+<img src="https://raw.githubusercontent.com/RiadhAdrani/color-noter-desktop/master/md/about.PNG" alt="drawing" style='border-radius:10px'/>
 
 **Home Screen**
-<img src="./md/home.png" alt="drawing" style='border-radius:10px'/>
+<img src="https://raw.githubusercontent.com/RiadhAdrani/color-noter-desktop/master/md/home.PNG" alt="drawing" style='border-radius:10px'/>
 
 **Settings Section**
 Changing Color only :)
-<img src="./md/settings.png" alt="drawing" style='border-radius:10px'/>
+<img src="https://raw.githubusercontent.com/RiadhAdrani/color-noter-desktop/master/md/settings.PNG" alt="drawing" style='border-radius:10px'/>
 
 **Color Changing Window**
-<img src="./md/change-color.png" alt="drawing" style='border-radius:10px'/>
+<img src="https://raw.githubusercontent.com/RiadhAdrani/color-noter-desktop/master/md/change-color.PNG" alt="drawing" style='border-radius:10px'/>
 
 **About**
-<img src="./md/about.png" alt="drawing" style='border-radius:10px'/>
+<img src="https://raw.githubusercontent.com/RiadhAdrani/color-noter-desktop/master/md/about.PNG" alt="drawing" style='border-radius:10px'/>
 
 **Text Note**
-<img src="./md/note-text.png" alt="drawing" style='border-radius:10px'/>
+<img src="https://raw.githubusercontent.com/RiadhAdrani/color-noter-desktop/master/md/note-text.PNG" alt="drawing" style='border-radius:10px'/>
 
 **To do**
-<img src="./md/note-todo.png" alt="drawing" style='border-radius:10px'/>
+<img src="https://raw.githubusercontent.com/RiadhAdrani/color-noter-desktop/master/md/note-todo.PNG" alt="drawing" style='border-radius:10px'/>
