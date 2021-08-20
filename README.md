@@ -39,7 +39,7 @@ Check this repo for the android version : [color-noter-plus](https://github.com/
 
 **Login Screen**
 
-<img src="https://raw.githubusercontent.com/RiadhAdrani/color-noter-desktop/master/md/about.PNG" alt="drawing" style='border-radius:10px'/>
+<img src="https://raw.githubusercontent.com/RiadhAdrani/color-noter-desktop/master/md/login.PNG" alt="drawing" style='border-radius:10px'/>
 
 **Home Screen**
 <img src="https://raw.githubusercontent.com/RiadhAdrani/color-noter-desktop/master/md/home.PNG" alt="drawing" style='border-radius:10px'/>
